@@ -4,7 +4,7 @@ Jarvis is my own virtual assistant, designed to separate internal workings from 
 
 # Input and Output
 
-In addition to text input, Jarvis supports listening to voice and using speech to text technology to convert it before being fed into the internal workings. Similarly, in addition to printing to a screen, Jarvis supports speaking the output using text to speech technology. While Jarvis's interal workings can be the same no-matter the device, listening and speaking changes depending on the device.
+In addition to text input, Jarvis supports listening to voice and using speech to text technology to convert it before being fed into the internal workings. Similarly, in addition to printing to a screen, Jarvis supports speaking the output using text to speech technology. While Jarvis's internal workings can be the same no-matter the device, listening and speaking changes depending on the device.
 
 # Plan
 
