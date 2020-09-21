@@ -1,11 +1,23 @@
 # Introduction
 
-Jarvis is my own virtual assistant, designed to separate internal workings from use so it can work on many devices. The internal workings are a function that takes a string input (the command) and outputs a string (the response). It is Jarvis's job to understand the command and form a meaningful response.
+Jarvis is my own virtual assistant, designed to work on any device.
 
-# Input and Output
+# Usage
 
-In addition to text input, Jarvis supports listening to voice and using speech to text technology to convert it before being fed into the internal workings. Similarly, in addition to printing to a screen, Jarvis supports speaking the output using text to speech technology. While Jarvis's internal workings can be the same no-matter the device, listening and speaking changes depending on the device.
+Run the file named according to the system you are on. Currently supported systems are:
 
-# Plan
+- Windows
+- Android
+- Raspian (Linux)
 
-Rather than having `speaker` and `listener` classes for each OS, have `inputter` and `outputter` classes for each device and within it, handle whether to listen, print, speak or get text input depending on what they want and if there are errors
+# Developers
+
+There are 2 main ways to improve Jarvis:
+
+## Adding support for new systems
+
+If you want to run Jarvis on a system not yet supported, you can write a file following the guidance in `Design.md`, the template `TemplateSystem.py` and the existing ones as examples, e.g.: `Windows.py`.
+
+## Improving the core
+
+At the moment, Jarvis is hard-coded but I intend to add machine learning ability.

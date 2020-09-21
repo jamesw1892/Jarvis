@@ -1,0 +1,36 @@
+2020-09-21 22:09:04 INFO Core.py:9 - Jarvis instance started
+2020-09-21 22:09:09 ERROR Windows.py:86 - 'NoneType' object has no attribute 'group'
+2020-09-21 22:09:39 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:14:49 INFO Core.py:9 - Jarvis instance started
+2020-09-21 22:14:56 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:15:23 INFO Core.py:9 - Jarvis instance started
+2020-09-21 22:15:41 ERROR Windows.py:76 - Could not speak
+Traceback (most recent call last):
+  File "Windows.py", line 71, in speak
+    tts.save(self.dir + str(self.count) + ".mp3")
+  File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 111, in save
+    self.write_to_fp(f)
+  File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 124, in write_to_fp
+    'tk' : self.token.calculate_token(part)}
+  File "D:\Program Files\Python364\lib\site-packages\gtts_token\gtts_token.py", line 28, in calculate_token
+    seed = self._get_token_key()
+  File "D:\Program Files\Python364\lib\site-packages\gtts_token\gtts_token.py", line 61, in _get_token_key
+    tkk_expr = re.search(".*?(TKK=.*?;)W.*?", line).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2020-09-21 22:15:41 ERROR Windows.py:87 - 'NoneType' object has no attribute 'group'
+2020-09-21 22:15:43 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:17:22 INFO Core.py:9 - Jarvis instance started
+2020-09-21 22:17:29 ERROR Windows.py:76 - Could not speak
+Traceback (most recent call last):
+  File "Windows.py", line 71, in speak
+    tts.save(self.dir + str(self.count) + ".mp3")
+  File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 111, in save
+    self.write_to_fp(f)
+  File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 124, in write_to_fp
+    'tk' : self.token.calculate_token(part)}
+  File "D:\Program Files\Python364\lib\site-packages\gtts_token\gtts_token.py", line 28, in calculate_token
+    seed = self._get_token_key()
+  File "D:\Program Files\Python364\lib\site-packages\gtts_token\gtts_token.py", line 61, in _get_token_key
+    tkk_expr = re.search(".*?(TKK=.*?;)W.*?", line).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2020-09-21 22:17:54 ERROR Windows.py:42 - Could not understand audio

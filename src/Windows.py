@@ -1,8 +1,10 @@
-from BackupIO import input_, output, log
+import Core
+import IO
+import logging
 from typing import Union
 from os import system, remove
 
-class WindowsInputter:
+class Inputter:
     def __init__(self, to_listen: bool):
         self.to_listen = to_listen
         if self.to_listen:
@@ -10,15 +12,15 @@ class WindowsInputter:
                 import speech_recognition as sr
                 self.sr = sr
                 self.listener = sr.Recognizer()
-            except ImportError:
-                log("Could not input listener")
+            except ImportError as e:
+                logging.exception("Could not import listener", exc_info=e, stack_info=e.__traceback__)
                 self.to_listen = False
 
     def listen(self) -> Union[bool, str]:
 
         with self.sr.Microphone() as source:
             self.listener.adjust_for_ambient_noise(source)
-            output("Speak now")
+            IO.stdout("Speak now")
             audio = self.listener.listen(source)
 
         is_error = False
@@ -37,18 +39,18 @@ class WindowsInputter:
         if self.to_listen:
             is_error, cmd_or_error_msg = self.listen()
             if is_error:
-                log(cmd_or_error_msg)
+                logging.error(cmd_or_error_msg)
             else:
                 return cmd_or_error_msg
 
-        return input_()
+        return IO.stdin()
 
 class WindowsOutputter:
     def __init__(self, to_speak: bool):
         try:
             from gtts import gTTS
-        except ImportError:
-            log("Could not import gtts for WindowsOutputter to speak")
+        except ImportError as e:
+            logging.exception("Could not import gtts for WindowsOutputter to speak", exc_info=e, stack_info=e.__traceback__)
 
         self.dir = "C:/Users/defaultuser0/Music/"
         self.to_speak = to_speak
@@ -71,6 +73,7 @@ class WindowsOutputter:
                 system(self.dir + str(self.count) + ".mp3")
                 self.count += 1
             except Exception as e:
+                logging.exception("Could not speak", exc_info=e)
                 message = str(e)
                 error = True
 
@@ -81,11 +84,12 @@ class WindowsOutputter:
         if self.to_speak:
             is_error, error_msg = self.speak(response)
             if is_error:
-                log(error_msg)
-                output(response)
+                IO.stdout(response)
         else:
-            output(response)
+            IO.stdout(response)
 
 def main(to_listen: bool, to_speak: bool):
-    # TODO
-    pass
+    Core.main(Inputter(to_listen), WindowsOutputter(to_speak))
+
+if __name__ == "__main__":
+    main(True, True)

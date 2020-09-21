@@ -1,11 +1,14 @@
 from datetime import datetime
 from random import choice
-
-def suffix(day):
-    digit2, digit1 = divmod(day, 10)
+from Util import suffix
+import IO
+import logging
 
 class Jarvis:
-    def respond(cmd: str) -> str:
+    def __init__(self):
+        logging.info("Jarvis instance started")
+
+    def respond(self, cmd: str) -> str:
 
         # format cmd to remove punctuation
         cmd = " " + cmd.lower() + " "
@@ -66,14 +69,14 @@ class Jarvis:
         return out
 
 def main(inputter, outputter):
+    """
+    Run Jarvis with the given inputter and outputter which
+    are system specific
+    """
 
-    is_error = False
+    jarvis = Jarvis()
     cmd = inputter.input_()
-    while cmd != "" and not is_error:
-        response = Jarvis.respond(cmd)
+    while cmd != "":
+        response = jarvis.respond(cmd)
         outputter.output(response)
         cmd = inputter.input_()
-
-if __name__ == "__main__":
-    from Windows import WindowsInputter, WindowsOutputter
-    main(WindowsInputter(False), WindowsOutputter(True))
