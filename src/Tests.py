@@ -1,4 +1,5 @@
 from Util import suffix
+import logging
 
 def t_suffix():
 
@@ -11,5 +12,17 @@ def t_divmod():
         tens, units = divmod(i, 10)
         print("{} = {}{}".format(i, tens, units))
 
+def logging_exception():
+
+    def f():
+        try:
+            raise Exception("Message in exception")
+        except Exception as e:
+            # this is the way to log an exception properly,
+            # don't use kwarg stack_info
+            logging.exception("Message in log", exc_info=e)
+
+    f()
+
 if __name__ == "__main__":
-    t_suffix()
+    logging_exception()

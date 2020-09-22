@@ -13,7 +13,7 @@ class Inputter:
                 self.sr = sr
                 self.listener = sr.Recognizer()
             except ImportError as e:
-                logging.exception("Could not import listener", exc_info=e, stack_info=e.__traceback__)
+                logging.exception("Could not import listener, reverting to standard input", exc_info=e)
                 self.to_listen = False
 
     def listen(self) -> Union[bool, str]:
@@ -47,15 +47,17 @@ class Inputter:
 
 class WindowsOutputter:
     def __init__(self, to_speak: bool):
-        try:
-            from gtts import gTTS
-        except ImportError as e:
-            logging.exception("Could not import gtts for WindowsOutputter to speak", exc_info=e, stack_info=e.__traceback__)
+        self.to_speak = to_speak
+        if to_speak:
+            try:
+                from gtts import gTTS
+            except ImportError as e:
+                logging.exception("Could not import speaker, reverting to standard output", exc_info=e)
+                self.to_speak = False
 
         self.dir = "C:/Users/defaultuser0/Music/"
-        self.to_speak = to_speak
         self.count = 0
-        self.history = {}
+        self.history = dict()
         self.gTTS = gTTS
 
     def speak(self, msg: str):
