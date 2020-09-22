@@ -6,7 +6,7 @@ import logging
 
 class Jarvis:
     def __init__(self):
-        logging.info("Jarvis instance started")
+        logging.info("Jarvis started")
 
     def respond(self, cmd: str) -> str:
 

@@ -1,5 +1,6 @@
 import Core
 import IO
+import logging
 
 class Inputter:
     def __init__(self, medium):
@@ -9,7 +10,7 @@ class Inputter:
 
         # Try to input through the prefered medium, but revert to
         # backup if need to and log any errors found, for example:
-        # IO.log("Error")
+        # logging.error("Problem!")
 
         return IO.stdin()
 
@@ -21,7 +22,7 @@ class Outputter:
 
         # Try to output through the prefered medium, but revert to
         # backup if need to and log any errors found, for example:
-        # IO.log("Error")
+        # logging.error("Problem!")
 
         IO.stdout(response)
 
