@@ -2,7 +2,7 @@ from Util import suffix
 
 def t_suffix():
 
-    for i in range(1, 31+1):
+    for i in range(-31, 1):
         print(str(i) + suffix(i))
 
 def t_divmod():
