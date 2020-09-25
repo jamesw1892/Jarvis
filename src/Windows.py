@@ -1,56 +1,91 @@
 import Core
 import IO
 import logging
+import os
 from typing import Union
-from os import system, remove
 
 class Inputter:
+    """
+    Manage getting commands from the user on Windows, listening to the user's
+    voice if requested and possible
+    """
+
     def __init__(self, to_listen: bool):
+        """
+        Instantiate the inputter.
+
+        to_listen is a boolean indicating whether to listen to the user's
+        voice if possible.
+        """
+
         self.to_listen = to_listen
         if self.to_listen:
             try:
                 import speech_recognition as sr
-                self.sr = sr
-                self.listener = sr.Recognizer()
             except ImportError as e:
-                logging.exception("Could not import listener, reverting to standard input", exc_info=e)
+                logging.exception("Could not import speech_recognition, reverting to standard input", exc_info=e)
                 self.to_listen = False
+            else:
+                try:
+                    import pyaudio
+                except ImportError as e:
+                    logging.exception("Could not import pyaudio, reverting to standard input", exc_info=e)
+                    self.to_listen = False
+                else:
+                    self.sr = sr
+                    self.listener = sr.Recognizer()
 
-    def listen(self) -> Union[bool, str]:
+    def listen(self) -> Union[str, None]:
 
         with self.sr.Microphone() as source:
             self.listener.adjust_for_ambient_noise(source)
-            IO.stdout("Speak now")
+            IO.stdout("Listening...")
             audio = self.listener.listen(source)
+            IO.stdout("Recognising...")
 
-        is_error = False
+        cmd = None
         try:
-            cmd_or_error_msg = self.listener.recognize_google(audio) # NOTE: must be online
-        except self.sr.UnknownValueError:
-            is_error = True
-            cmd_or_error_msg = "Could not understand audio"
+            cmd = self.listener.recognize_google(audio, language="en-GB")
+        except self.sr.UnknownValueError as e:
+            # logging.exception("Could not understand audio, temporarily reverting to standard input", exc_info=e)
+            logging.warning("Could not understand audio, try again", exc_info=e)
+            return self.listen()
         except self.sr.RequestError as e:
-            is_error = True
-            cmd_or_error_msg = "Could not request results; " + str(e)
+            # NOTE: default API key only allows 50 requests per day
+            logging.exception("Could not request results - no internet connection or invalid API key, temporarily reverting to standard input", exc_info=e)
 
-        return is_error, cmd_or_error_msg
+        return cmd
 
     def input_(self) -> str:
+        """
+        Input a command from the user, listening to their voice if
+        requested and possible
+        """
+
         if self.to_listen:
-            is_error, cmd_or_error_msg = self.listen()
-            if is_error:
-                logging.error(cmd_or_error_msg)
+            try:
+                cmd = self.listen()
+
+            # if there was an unknown error, log it and default to stdout this time
+            except Exception as e:
+                logging.exception("Unknown error when listening, permanently reverting to standard input", exc_info=e)
+                self.to_listen = False
+
+            # if there was no error, return it
             else:
-                return cmd_or_error_msg
+                if cmd is not None:
+                    return cmd
+
+                # if there was a known error, it has already been logged so use stdout temporarily
 
         return IO.stdin()
 
-class WindowsOutputter:
+class Outputter:
     def __init__(self, to_speak: bool):
         self.to_speak = to_speak
         if to_speak:
             try:
-                from gtts import gTTS
+                from gtts import gTTS, tts
             except ImportError as e:
                 logging.exception("Could not import speaker, reverting to standard output", exc_info=e)
                 self.to_speak = False
@@ -59,39 +94,63 @@ class WindowsOutputter:
         self.count = 0
         self.history = dict()
         self.gTTS = gTTS
+        self.gTTSError = tts.gTTSError
 
-    def speak(self, msg: str):
+    def speak(self, text: str) -> bool:
 
-        message = None
-        error = False
+        errored = False
 
-        if msg in self.history:
-            system(self.dir + str(self.history[msg]) + ".mp3")
+        # if already said it, run the existing file
+        if text in self.history:
+            os.system("{}{}.mp3".format(self.dir, self.history[text]))
+
         else:
+            file_location = "{}{}.mp3".format(self.dir, self.count)
             try:
-                tts = self.gTTS(msg)
-                tts.save(self.dir + str(self.count) + ".mp3")
-                self.history[msg] = self.count
-                system(self.dir + str(self.count) + ".mp3")
-                self.count += 1
-            except Exception as e:
-                logging.exception("Could not speak", exc_info=e)
-                message = str(e)
-                error = True
+                audio = self.gTTS(text)
+            except AssertionError as e:
+                logging.exception("Nothing to say, temporarily reverting to standard output", exc_info=e)
+                errored = True
+            else:
+                try:
+                    audio.save(file_location)
+                except PermissionError as e:
+                    logging.exception("Don't have permission to save file, permanently reverting to standard output", exc_info=e)
+                except self.gTTSError as e:
+                    logging.exception("Error with API request, permanently reverting to standard output, inference of error: {}".format(e.infer_msg(audio)), exc_info=e)
+                    errored = True
+                    self.to_speak = False
+                else:
+                    self.history[text] = self.count
+                    os.system(file_location)
+                    self.count += 1
 
-        return error, message
+        return errored
 
     def output(self, response: str):
 
         if self.to_speak:
-            is_error, error_msg = self.speak(response)
-            if is_error:
-                IO.stdout(response)
-        else:
-            IO.stdout(response)
+            try:
+                errored = self.speak(response)
+            except Exception as e:
+                logging.exception("Unknown error when speaking, permanently reverting to standard output", exc_info=e)
+                self.to_speak = False
+            else:
+                if not errored:
+                    return
+
+        IO.stdout(response)
 
 def main(to_listen: bool, to_speak: bool):
-    Core.main(Inputter(to_listen), WindowsOutputter(to_speak))
+    """
+    Run Jarvis on Windows. to_listen is a bool representing
+    whether to try listening to the user for input (otherwise
+    will get input from standard input). to_speak is a bool
+    representing whether to try speaking to the user (otherwise
+    will print to standard output).
+    """
+
+    Core.main(Inputter(to_listen), Outputter(to_speak))
 
 if __name__ == "__main__":
     main(True, True)
