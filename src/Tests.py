@@ -20,7 +20,7 @@ def logging_exception():
         except Exception as e:
             # this is the way to log an exception properly,
             # don't use kwarg stack_info
-            logging.exception("Message in log", exc_info=e)
+            logging.error("Message in log", exc_info=e)
 
     f()
 

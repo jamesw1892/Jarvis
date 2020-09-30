@@ -20,16 +20,18 @@ class Inputter:
 
         self.to_listen = to_listen
         if self.to_listen:
+
+            # log import errors or initialise the listener
             try:
                 import speech_recognition as sr
             except ImportError as e:
-                logging.exception("Could not import speech_recognition, reverting to standard input", exc_info=e)
+                logging.error("Could not import speech_recognition, reverting to standard input", exc_info=e)
                 self.to_listen = False
             else:
                 try:
                     import pyaudio
                 except ImportError as e:
-                    logging.exception("Could not import pyaudio, reverting to standard input", exc_info=e)
+                    logging.error("Could not import pyaudio, reverting to standard input", exc_info=e)
                     self.to_listen = False
                 else:
                     self.sr = sr
@@ -37,6 +39,7 @@ class Inputter:
 
     def listen(self) -> Union[str, None]:
 
+        # listen
         with self.sr.Microphone() as source:
             self.listener.adjust_for_ambient_noise(source)
             IO.stdout("Listening...")
@@ -47,12 +50,11 @@ class Inputter:
         try:
             cmd = self.listener.recognize_google(audio, language="en-GB")
         except self.sr.UnknownValueError as e:
-            # logging.exception("Could not understand audio, temporarily reverting to standard input", exc_info=e)
-            logging.warning("Could not understand audio, try again", exc_info=e)
+            logging.warning("Could not understand audio, try again")
             return self.listen()
         except self.sr.RequestError as e:
             # NOTE: default API key only allows 50 requests per day
-            logging.exception("Could not request results - no internet connection or invalid API key, temporarily reverting to standard input", exc_info=e)
+            logging.error("Could not request results - no internet connection or invalid API key, temporarily reverting to standard input", exc_info=e)
 
         return cmd
 
@@ -68,7 +70,7 @@ class Inputter:
 
             # if there was an unknown error, log it and default to stdout this time
             except Exception as e:
-                logging.exception("Unknown error when listening, permanently reverting to standard input", exc_info=e)
+                logging.error("Unknown error when listening, permanently reverting to standard input", exc_info=e)
                 self.to_listen = False
 
             # if there was no error, return it
@@ -87,7 +89,7 @@ class Outputter:
             try:
                 from gtts import gTTS, tts
             except ImportError as e:
-                logging.exception("Could not import speaker, reverting to standard output", exc_info=e)
+                logging.error("Could not import speaker, reverting to standard output", exc_info=e)
                 self.to_speak = False
 
         self.dir = "C:/Users/defaultuser0/Music/"
@@ -106,24 +108,20 @@ class Outputter:
 
         else:
             file_location = "{}{}.mp3".format(self.dir, self.count)
+            audio = self.gTTS(text)
             try:
-                audio = self.gTTS(text)
-            except AssertionError as e:
-                logging.exception("Nothing to say, temporarily reverting to standard output", exc_info=e)
+                audio.save(file_location)
+            except PermissionError as e:
+                logging.error("Don't have permission to save file, permanently reverting to standard output", exc_info=e)
                 errored = True
+            except self.gTTSError as e:
+                logging.error("Error with API request, permanently reverting to standard output, inference of error: {}".format(e.infer_msg(audio)), exc_info=e)
+                errored = True
+                self.to_speak = False
             else:
-                try:
-                    audio.save(file_location)
-                except PermissionError as e:
-                    logging.exception("Don't have permission to save file, permanently reverting to standard output", exc_info=e)
-                except self.gTTSError as e:
-                    logging.exception("Error with API request, permanently reverting to standard output, inference of error: {}".format(e.infer_msg(audio)), exc_info=e)
-                    errored = True
-                    self.to_speak = False
-                else:
-                    self.history[text] = self.count
-                    os.system(file_location)
-                    self.count += 1
+                self.history[text] = self.count
+                os.startfile(file_location)
+                self.count += 1
 
         return errored
 
@@ -133,7 +131,7 @@ class Outputter:
             try:
                 errored = self.speak(response)
             except Exception as e:
-                logging.exception("Unknown error when speaking, permanently reverting to standard output", exc_info=e)
+                logging.error("Unknown error when speaking, permanently reverting to standard output", exc_info=e)
                 self.to_speak = False
             else:
                 if not errored:

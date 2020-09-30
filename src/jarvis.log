@@ -197,3 +197,11 @@ Traceback (most recent call last):
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 294, in save
     with open(str(savefile), 'wb') as f:
 PermissionError: [Errno 13] Permission denied: 'C:/Users/defaultuser0/Music/0.mp3'
+2020-09-30 22:28:44 INFO Core.py:9 - Jarvis started
+2020-09-30 22:31:16 WARNING Windows.py:51 - Could not understand audio, try again
+Traceback (most recent call last):
+  File "Windows.py", line 48, in listen
+    cmd = self.listener.recognize_google(audio, language="en-GB")
+  File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
+    if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
+speech_recognition.UnknownValueError
