@@ -16,6 +16,6 @@ Initialise state here which will play a role with machine learning when added.
 
 The respond function takes in a string (the command) and outputs a string (the reponse). It is Jarvis's job to understand the command and form a meaningful response.
 
-## Systems Support (`Windows.py`, `Android.py`, ...)
+## Systems Support (start with `OS`, e.g.: `OSWindows.py`, `OSAndroid.py`, ...)
 
 Adding support for systems requires 2 classes - `Inputter` and `Outputter`. `Inputter` requires an init and a `input_` method and `Outputter` requires an init and a `output` method. The init should ask the prefered medium of input/output, e.g.: listen or text input. The method itself should try to use the prefered medium (which is likely to be system specific), but if any problems should arise, it should revert to the backup mediums and log errors. In `IO.py` there are methods for text input (`input_`) and output (`output`). Errors should be logged using the `logging` library and the format is set up when `IO.py` is imported.

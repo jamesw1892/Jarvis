@@ -1,12 +1,12 @@
 2020-09-21 22:09:04 INFO Core.py:9 - Jarvis instance started
-2020-09-21 22:09:09 ERROR Windows.py:86 - 'NoneType' object has no attribute 'group'
-2020-09-21 22:09:39 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:09:09 ERROR OSWindows.py:86 - 'NoneType' object has no attribute 'group'
+2020-09-21 22:09:39 ERROR OSWindows.py:42 - Could not understand audio
 2020-09-21 22:14:49 INFO Core.py:9 - Jarvis instance started
-2020-09-21 22:14:56 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:14:56 ERROR OSWindows.py:42 - Could not understand audio
 2020-09-21 22:15:23 INFO Core.py:9 - Jarvis instance started
-2020-09-21 22:15:41 ERROR Windows.py:76 - Could not speak
+2020-09-21 22:15:41 ERROR OSWindows.py:76 - Could not speak
 Traceback (most recent call last):
-  File "Windows.py", line 71, in speak
+  File "OSWindows.py", line 71, in speak
     tts.save(self.dir + str(self.count) + ".mp3")
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 111, in save
     self.write_to_fp(f)
@@ -17,12 +17,12 @@ Traceback (most recent call last):
   File "D:\Program Files\Python364\lib\site-packages\gtts_token\gtts_token.py", line 61, in _get_token_key
     tkk_expr = re.search(".*?(TKK=.*?;)W.*?", line).group(1)
 AttributeError: 'NoneType' object has no attribute 'group'
-2020-09-21 22:15:41 ERROR Windows.py:87 - 'NoneType' object has no attribute 'group'
-2020-09-21 22:15:43 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:15:41 ERROR OSWindows.py:87 - 'NoneType' object has no attribute 'group'
+2020-09-21 22:15:43 ERROR OSWindows.py:42 - Could not understand audio
 2020-09-21 22:17:22 INFO Core.py:9 - Jarvis instance started
-2020-09-21 22:17:29 ERROR Windows.py:76 - Could not speak
+2020-09-21 22:17:29 ERROR OSWindows.py:76 - Could not speak
 Traceback (most recent call last):
-  File "Windows.py", line 71, in speak
+  File "OSWindows.py", line 71, in speak
     tts.save(self.dir + str(self.count) + ".mp3")
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 111, in save
     self.write_to_fp(f)
@@ -33,34 +33,34 @@ Traceback (most recent call last):
   File "D:\Program Files\Python364\lib\site-packages\gtts_token\gtts_token.py", line 61, in _get_token_key
     tkk_expr = re.search(".*?(TKK=.*?;)W.*?", line).group(1)
 AttributeError: 'NoneType' object has no attribute 'group'
-2020-09-21 22:17:54 ERROR Windows.py:42 - Could not understand audio
+2020-09-21 22:17:54 ERROR OSWindows.py:42 - Could not understand audio
 2020-09-25 19:13:52 INFO Core.py:9 - Jarvis started
-2020-09-25 19:14:47 ERROR Windows.py:49 - Could not understand audio, temporarily reverting to standard input
+2020-09-25 19:14:47 ERROR OSWindows.py:49 - Could not understand audio, temporarily reverting to standard input
 Traceback (most recent call last):
-  File "Windows.py", line 47, in listen
+  File "OSWindows.py", line 47, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
 2020-09-25 19:16:18 INFO Core.py:9 - Jarvis started
-2020-09-25 19:16:37 WARNING Windows.py:50 - Could not understand audio, try again
+2020-09-25 19:16:37 WARNING OSWindows.py:50 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 47, in listen
+  File "OSWindows.py", line 47, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
 2020-09-25 19:16:56 INFO Core.py:9 - Jarvis started
-2020-09-25 19:17:15 WARNING Windows.py:50 - Could not understand audio, try again
+2020-09-25 19:17:15 WARNING OSWindows.py:50 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 47, in listen
+  File "OSWindows.py", line 47, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
-2020-09-25 19:17:15 ERROR Windows.py:70 - Unknown error when listening, permanently reverting to standard input
+2020-09-25 19:17:15 ERROR OSWindows.py:70 - Unknown error when listening, permanently reverting to standard input
 Traceback (most recent call last):
-  File "Windows.py", line 47, in listen
+  File "OSWindows.py", line 47, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
@@ -69,89 +69,73 @@ speech_recognition.UnknownValueError
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "Windows.py", line 66, in input_
+  File "OSWindows.py", line 66, in input_
     cmd = self.listen()
-  File "Windows.py", line 51, in listen
+  File "OSWindows.py", line 51, in listen
     return listen()
 NameError: name 'listen' is not defined
 2020-09-25 19:18:09 INFO Core.py:9 - Jarvis started
-2020-09-25 19:18:15 ERROR Windows.py:133 - Unknown error when speaking, permanently reverting to standard output
+2020-09-25 19:18:15 ERROR OSWindows.py:133 - Unknown error when speaking, permanently reverting to standard output
 Traceback (most recent call last):
-  File "Windows.py", line 131, in output
+  File "OSWindows.py", line 131, in output
     errored = self.speak(response)
-  File "Windows.py", line 115, in speak
+  File "OSWindows.py", line 115, in speak
     audio.save(file_location)
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 294, in save
     with open(str(savefile), 'wb') as f:
 PermissionError: [Errno 13] Permission denied: 'C:/Users/defaultuser0/Music/0.mp3'
-2020-09-25 19:18:21 WARNING Windows.py:50 - Could not understand audio, try again
+2020-09-25 19:18:21 WARNING OSWindows.py:50 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 47, in listen
+  File "OSWindows.py", line 47, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
-2020-09-25 19:18:39 WARNING Windows.py:50 - Could not understand audio, try again
+2020-09-25 19:18:39 WARNING OSWindows.py:50 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 47, in listen
+  File "OSWindows.py", line 47, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
 2020-09-25 19:20:06 INFO Core.py:9 - Jarvis started
-2020-09-25 19:20:29 ERROR Windows.py:71 - Unknown error when listening, permanently reverting to standard input
+2020-09-25 19:20:29 ERROR OSWindows.py:71 - Unknown error when listening, permanently reverting to standard input
 Traceback (most recent call last):
-  File "Windows.py", line 67, in input_
+  File "OSWindows.py", line 67, in input_
     cmd = self.listen()
-  File "Windows.py", line 44, in listen
+  File "OSWindows.py", line 44, in listen
     IO.stout("Recognising...")
 AttributeError: module 'IO' has no attribute 'stout'
 2020-09-25 19:20:43 INFO Core.py:9 - Jarvis started
-2020-09-25 19:20:49 ERROR Windows.py:134 - Unknown error when speaking, permanently reverting to standard output
+2020-09-25 19:20:49 ERROR OSWindows.py:134 - Unknown error when speaking, permanently reverting to standard output
 Traceback (most recent call last):
-  File "Windows.py", line 132, in output
+  File "OSWindows.py", line 132, in output
     errored = self.speak(response)
-  File "Windows.py", line 116, in speak
+  File "OSWindows.py", line 116, in speak
     audio.save(file_location)
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 294, in save
     with open(str(savefile), 'wb') as f:
 PermissionError: [Errno 13] Permission denied: 'C:/Users/defaultuser0/Music/0.mp3'
 2020-09-25 19:22:14 INFO Core.py:9 - Jarvis started
-2020-09-25 19:23:05 ERROR Windows.py:134 - Unknown error when speaking, permanently reverting to standard output
+2020-09-25 19:23:05 ERROR OSWindows.py:134 - Unknown error when speaking, permanently reverting to standard output
 Traceback (most recent call last):
-  File "Windows.py", line 132, in output
+  File "OSWindows.py", line 132, in output
     errored = self.speak(response)
-  File "Windows.py", line 116, in speak
+  File "OSWindows.py", line 116, in speak
     audio.save(file_location)
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 294, in save
     with open(str(savefile), 'wb') as f:
 PermissionError: [Errno 13] Permission denied: 'C:/Users/defaultuser0/Music/0.mp3'
-2020-09-25 19:23:18 WARNING Windows.py:51 - Could not understand audio, try again
+2020-09-25 19:23:18 WARNING OSWindows.py:51 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
+  File "OSWindows.py", line 48, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
-2020-09-25 19:23:45 WARNING Windows.py:51 - Could not understand audio, try again
+2020-09-25 19:23:45 WARNING OSWindows.py:51 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
-    cmd = self.listener.recognize_google(audio, language="en-GB")
-  File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
-    if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
-speech_recognition.UnknownValueError
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
-    cmd = self.listener.recognize_google(audio, language="en-GB")
-  File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
-    if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
-speech_recognition.UnknownValueError
-2020-09-25 19:23:53 WARNING Windows.py:51 - Could not understand audio, try again
-Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
+  File "OSWindows.py", line 48, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
@@ -160,7 +144,14 @@ speech_recognition.UnknownValueError
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
+  File "OSWindows.py", line 48, in listen
+    cmd = self.listener.recognize_google(audio, language="en-GB")
+  File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
+    if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
+speech_recognition.UnknownValueError
+2020-09-25 19:23:53 WARNING OSWindows.py:51 - Could not understand audio, try again
+Traceback (most recent call last):
+  File "OSWindows.py", line 48, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
@@ -169,38 +160,47 @@ speech_recognition.UnknownValueError
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
+  File "OSWindows.py", line 48, in listen
+    cmd = self.listener.recognize_google(audio, language="en-GB")
+  File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
+    if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
+speech_recognition.UnknownValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "OSWindows.py", line 48, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
 2020-09-25 19:28:43 INFO Core.py:9 - Jarvis started
 2020-09-25 19:29:29 INFO Core.py:9 - Jarvis started
-2020-09-25 19:29:37 ERROR Windows.py:118 - Don't have permission to save file, permanently reverting to standard output
+2020-09-25 19:29:37 ERROR OSWindows.py:118 - Don't have permission to save file, permanently reverting to standard output
 Traceback (most recent call last):
-  File "Windows.py", line 116, in speak
+  File "OSWindows.py", line 116, in speak
     audio.save(file_location)
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 294, in save
     with open(str(savefile), 'wb') as f:
 PermissionError: [Errno 13] Permission denied: 'C:/Users/defaultuser0/Music/0.mp3'
-2020-09-25 19:29:42 WARNING Windows.py:51 - Could not understand audio, try again
+2020-09-25 19:29:42 WARNING OSWindows.py:51 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
+  File "OSWindows.py", line 48, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
-2020-09-25 19:29:48 ERROR Windows.py:118 - Don't have permission to save file, permanently reverting to standard output
+2020-09-25 19:29:48 ERROR OSWindows.py:118 - Don't have permission to save file, permanently reverting to standard output
 Traceback (most recent call last):
-  File "Windows.py", line 116, in speak
+  File "OSWindows.py", line 116, in speak
     audio.save(file_location)
   File "D:\Program Files\Python364\lib\site-packages\gtts\tts.py", line 294, in save
     with open(str(savefile), 'wb') as f:
 PermissionError: [Errno 13] Permission denied: 'C:/Users/defaultuser0/Music/0.mp3'
 2020-09-30 22:28:44 INFO Core.py:9 - Jarvis started
-2020-09-30 22:31:16 WARNING Windows.py:51 - Could not understand audio, try again
+2020-09-30 22:31:16 WARNING OSWindows.py:51 - Could not understand audio, try again
 Traceback (most recent call last):
-  File "Windows.py", line 48, in listen
+  File "OSWindows.py", line 48, in listen
     cmd = self.listener.recognize_google(audio, language="en-GB")
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()

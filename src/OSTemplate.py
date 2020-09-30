@@ -4,7 +4,7 @@ import logging
 
 # Put any medium-specific imports in the methods (not here) so that if a user
 # does not have a library, they can avoid errors by not selecting that
-# medium so it is never tried to be imported. See Windows.py for an example
+# medium so it is never tried to be imported. See OSWindows.py for an example
 
 class Inputter:
     """
