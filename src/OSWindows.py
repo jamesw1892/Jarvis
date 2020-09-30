@@ -4,6 +4,9 @@ import logging
 import os
 from typing import Union
 
+SOUND_FILE_DIR = os.path.join(os.path.expandvars("%TEMP%"), "Jarvis")
+SOUND_FILE_NAME = os.path.join(SOUND_FILE_DIR, "index.jarvis")
+
 class Inputter:
     """
     Manage getting commands from the user on Windows, listening to the user's
@@ -93,9 +96,28 @@ class Outputter:
                 logging.error("Could not import speaker, reverting to standard output", exc_info=e)
                 self.to_speak = False
 
-        self.dir = "C:/Users/defaultuser0/Music/"
-        self.count = 0
+        # Jarvis will store sound files in the temporary file location
+        # they are named with a number which corresponds to the message
+        # the correspondance is saved in SOUND_FILE_NAME which
+        # consists of a line for each response. The corresponding number
+        # is the line number, starting from 0
+        SOUND_FILE_DIR = os.path.join(os.path.expandvars("%TEMP%"), "Jarvis")
         self.history = dict()
+        self.next_response_num = 0
+
+        # try to read the existing record
+        if os.path.exists(SOUND_FILE_NAME):
+            with open(SOUND_FILE_NAME) as f:
+                for line in f:
+                    self.history[line] = self.next_response_num
+                    self.next_response_num += 1
+
+        # initialise record with nothing
+        else:
+            if not os.path.exists(SOUND_FILE_DIR):
+                os.mkdir(SOUND_FILE_DIR)
+            open(SOUND_FILE_NAME, "w").close()
+
         self.gTTS = gTTS
         self.gTTSError = gTTSError
 
@@ -105,10 +127,10 @@ class Outputter:
 
         # if already said it, run the existing file
         if text in self.history:
-            os.system("{}{}.mp3".format(self.dir, self.history[text]))
+            os.system("{}{}.mp3".format(SOUND_FILE_DIR, self.history[text]))
 
         else:
-            file_location = "{}{}.mp3".format(self.dir, self.count)
+            file_location = "{}{}.mp3".format(SOUND_FILE_DIR, self.next_response_num)
             audio = self.gTTS(text)
             try:
                 audio.save(file_location)
@@ -120,9 +142,9 @@ class Outputter:
                 errored = True
                 self.to_speak = False
             else:
-                self.history[text] = self.count
+                self.history[text] = self.next_response_num
                 os.startfile(file_location)
-                self.count += 1
+                self.next_response_num += 1
 
         return errored
 

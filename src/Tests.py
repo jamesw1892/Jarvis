@@ -1,5 +1,6 @@
 from Util import suffix
 import logging
+import os
 
 def t_suffix():
 
@@ -24,5 +25,9 @@ def logging_exception():
 
     f()
 
+def temp_loc():
+
+    print(os.path.expandvars("%TEMP%"))
+
 if __name__ == "__main__":
-    logging_exception()
+    temp_loc()
