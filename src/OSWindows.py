@@ -87,7 +87,8 @@ class Outputter:
         self.to_speak = to_speak
         if to_speak:
             try:
-                from gtts import gTTS, tts
+                from gtts import gTTS
+                from gtts.tts import gTTSError
             except ImportError as e:
                 logging.error("Could not import speaker, reverting to standard output", exc_info=e)
                 self.to_speak = False
@@ -96,7 +97,7 @@ class Outputter:
         self.count = 0
         self.history = dict()
         self.gTTS = gTTS
-        self.gTTSError = tts.gTTSError
+        self.gTTSError = gTTSError
 
     def speak(self, text: str) -> bool:
 
