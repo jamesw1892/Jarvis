@@ -4,11 +4,11 @@ Jarvis is an open source virtual assistant designed to work on any device.
 
 # Usage
 
-Run the file named according to the system you are on. Currently supported systems are:
+Run `Jarvis.py` to auto-detect the system you are on and run the relevant file. Otherwise, you can run the file yourself; currently supported systems are:
 
-- Windows
-- Android
-- Raspian (Linux)
+- Windows (`OSWindows.py`)
+- Android (`OSAndroid.py`)
+- Raspian Linux (`OSRaspian`)
 
 # Improvements
 
