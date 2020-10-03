@@ -5,7 +5,7 @@ import os
 from typing import Union
 
 SOUND_FILE_DIR = os.path.join(os.path.expandvars("%TEMP%"), "Jarvis")
-SOUND_FILE_NAME = os.path.join(SOUND_FILE_DIR, "index.jarvis")
+SOUND_FILE_INDEX = os.path.join(SOUND_FILE_DIR, "index.jarvis")
 
 class Inputter:
     """
@@ -96,30 +96,29 @@ class Outputter:
                 logging.error("Could not import speaker, reverting to standard output", exc_info=e)
                 self.to_speak = False
 
+        self.gTTS = gTTS
+        self.gTTSError = gTTSError
+
         # Jarvis will store sound files in the temporary file location
         # they are named with a number which corresponds to the message
         # the correspondance is saved in SOUND_FILE_NAME which
         # consists of a line for each response. The corresponding number
         # is the line number, starting from 0
-        SOUND_FILE_DIR = os.path.join(os.path.expandvars("%TEMP%"), "Jarvis")
         self.history = dict()
         self.next_response_num = 0
 
-        # try to read the existing record
-        if os.path.exists(SOUND_FILE_NAME):
-            with open(SOUND_FILE_NAME) as f:
+        if os.path.exists(SOUND_FILE_INDEX):
+            # try to read the existing record
+            with open(SOUND_FILE_INDEX) as f:
                 for line in f:
-                    self.history[line] = self.next_response_num
+                    self.history[line[:-1]] = self.next_response_num    # remove trailing newline on every line
                     self.next_response_num += 1
 
-        # initialise record with nothing
         else:
+            # initialise record with nothing
             if not os.path.exists(SOUND_FILE_DIR):
                 os.mkdir(SOUND_FILE_DIR)
-            open(SOUND_FILE_NAME, "w").close()
-
-        self.gTTS = gTTS
-        self.gTTSError = gTTSError
+            open(SOUND_FILE_INDEX, "w").close()
 
     def speak(self, text: str) -> bool:
 
@@ -127,24 +126,29 @@ class Outputter:
 
         # if already said it, run the existing file
         if text in self.history:
-            os.system("{}{}.mp3".format(SOUND_FILE_DIR, self.history[text]))
+            os.startfile(os.path.join(SOUND_FILE_DIR, "{}.mp3".format(self.history[text])))
 
         else:
-            file_location = "{}{}.mp3".format(SOUND_FILE_DIR, self.next_response_num)
+            file_location = os.path.join(SOUND_FILE_DIR, "{}.mp3".format(self.next_response_num))
             audio = self.gTTS(text)
             try:
                 audio.save(file_location)
             except PermissionError as e:
                 logging.error("Don't have permission to save file, permanently reverting to standard output", exc_info=e)
                 errored = True
+                self.to_speak = False
             except self.gTTSError as e:
                 logging.error("Error with API request, permanently reverting to standard output, inference of error: {}".format(e.infer_msg(audio)), exc_info=e)
                 errored = True
                 self.to_speak = False
             else:
+
+                # save to history for current run and the log file for future runs
                 self.history[text] = self.next_response_num
-                os.startfile(file_location)
+                with open(SOUND_FILE_INDEX, "a") as f:
+                    f.write(text + "\n")
                 self.next_response_num += 1
+                os.startfile(file_location)
 
         return errored
 

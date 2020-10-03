@@ -205,3 +205,8 @@ Traceback (most recent call last):
   File "D:\Program Files\Python364\lib\site-packages\speech_recognition\__init__.py", line 858, in recognize_google
     if not isinstance(actual_result, dict) or len(actual_result.get("alternative", [])) == 0: raise UnknownValueError()
 speech_recognition.UnknownValueError
+2020-10-03 21:59:13 INFO Core.py:9 - Jarvis started
+2020-10-03 21:59:49 WARNING OSWindows.py:56 - Could not understand audio, try again
+2020-10-03 21:59:55 WARNING OSWindows.py:56 - Could not understand audio, try again
+2020-10-03 22:00:45 INFO Core.py:9 - Jarvis started
+2020-10-03 22:00:59 WARNING OSWindows.py:56 - Could not understand audio, try again
