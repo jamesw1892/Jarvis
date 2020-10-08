@@ -96,29 +96,29 @@ class Outputter:
                 logging.error("Could not import speaker, reverting to standard output", exc_info=e)
                 self.to_speak = False
 
-        self.gTTS = gTTS
-        self.gTTSError = gTTSError
+            self.gTTS = gTTS
+            self.gTTSError = gTTSError
 
-        # Jarvis will store sound files in the temporary file location
-        # they are named with a number which corresponds to the message
-        # the correspondance is saved in SOUND_FILE_NAME which
-        # consists of a line for each response. The corresponding number
-        # is the line number, starting from 0
-        self.history = dict()
-        self.next_response_num = 0
+            # Jarvis will store sound files in the temporary file location
+            # they are named with a number which corresponds to the message
+            # the correspondance is saved in SOUND_FILE_NAME which
+            # consists of a line for each response. The corresponding number
+            # is the line number, starting from 0
+            self.history = dict()
+            self.next_response_num = 0
 
-        if os.path.exists(SOUND_FILE_INDEX):
-            # try to read the existing record
-            with open(SOUND_FILE_INDEX) as f:
-                for line in f:
-                    self.history[line[:-1]] = self.next_response_num    # remove trailing newline on every line
-                    self.next_response_num += 1
+            if os.path.exists(SOUND_FILE_INDEX):
+                # try to read the existing record
+                with open(SOUND_FILE_INDEX) as f:
+                    for line in f:
+                        self.history[line[:-1]] = self.next_response_num    # remove trailing newline on every line
+                        self.next_response_num += 1
 
-        else:
-            # initialise record with nothing
-            if not os.path.exists(SOUND_FILE_DIR):
-                os.mkdir(SOUND_FILE_DIR)
-            open(SOUND_FILE_INDEX, "w").close()
+            else:
+                # initialise record with nothing
+                if not os.path.exists(SOUND_FILE_DIR):
+                    os.mkdir(SOUND_FILE_DIR)
+                open(SOUND_FILE_INDEX, "w").close()
 
     def speak(self, text: str) -> bool:
 
