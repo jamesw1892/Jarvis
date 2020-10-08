@@ -210,3 +210,17 @@ speech_recognition.UnknownValueError
 2020-10-03 21:59:55 WARNING OSWindows.py:56 - Could not understand audio, try again
 2020-10-03 22:00:45 INFO Core.py:9 - Jarvis started
 2020-10-03 22:00:59 WARNING OSWindows.py:56 - Could not understand audio, try again
+2020-10-08 20:07:53 INFO Core.py:9 - Jarvis started
+2020-10-08 20:21:11 INFO logger.py:194 - [Logger      ] Record log in C:\Users\james\.kivy\logs\kivy_20-10-08_2.txt
+2020-10-08 20:21:11 INFO __init__.py:475 - [Kivy        ] v1.11.1
+2020-10-08 20:21:11 INFO __init__.py:478 - [Kivy        ] Installed at "D:\Program Files\Python364\lib\site-packages\kivy\__init__.py"
+2020-10-08 20:21:11 INFO __init__.py:479 - [Python      ] v3.6.4 (v3.6.4:d48eceb, Dec 19 2017, 06:54:40) [MSC v.1900 64 bit (AMD64)]
+2020-10-08 20:21:11 INFO __init__.py:480 - [Python      ] Interpreter at "D:\Program Files\Python364\python.exe"
+2020-10-08 20:21:41 WARNING logger.py:311 - stderr: Traceback (most recent call last):
+2020-10-08 20:21:41 WARNING logger.py:311 - stderr:   File "Jarvis.py", line 7, in <module>
+2020-10-08 20:21:41 WARNING logger.py:311 - stderr:     main(true_false("Listen? "), true_false("Speak? "))
+2020-10-08 20:21:41 WARNING logger.py:311 - stderr:   File "C:\Users\james\Dropbox\Programming\Projects\TTS\Jarvis\src\OSWindows.py", line 178, in main
+2020-10-08 20:21:42 WARNING logger.py:311 - stderr:     Core.main(Inputter(to_listen), Outputter(to_speak))
+2020-10-08 20:21:42 WARNING logger.py:311 - stderr:   File "C:\Users\james\Dropbox\Programming\Projects\TTS\Jarvis\src\OSWindows.py", line 99, in __init__
+2020-10-08 20:21:42 WARNING logger.py:311 - stderr:     self.gTTS = gTTS
+2020-10-08 20:21:42 WARNING logger.py:311 - stderr: UnboundLocalError: local variable 'gTTS' referenced before assignment
